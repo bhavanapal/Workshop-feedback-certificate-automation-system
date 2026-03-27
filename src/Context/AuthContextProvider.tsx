@@ -20,15 +20,6 @@ const signUp = async() => {
 // Login
 const logIn = async(email:string, password: string) =>{
     try{
-        // delete existing session if any
-        try{
-            await account.deleteSession({sessionId: "current"});
-        }catch(error:unknown){
-            if(error instanceof Error){
-            console.error("Unexpected logout error:", error);
-            }
-        }
-
           // create new email session
           await account.createEmailPasswordSession({email, password});
 
@@ -39,7 +30,7 @@ const logIn = async(email:string, password: string) =>{
        const roleData = await tablesDB.listRows({
        databaseId: DATABASE_ID,
        tableId: AUTH_COLLECTION_ID,
-    queries:[Query.equal("userId", currentUser.$id)],
+       queries:[Query.equal("userId", currentUser.$id)],
       });
 
        if(!roleData.rows?.length) throw new Error("Not authorized Access denied: user not found");
@@ -50,15 +41,16 @@ const logIn = async(email:string, password: string) =>{
         throw new Error("Access denied: not admin");
         }
 
-        setUser({
+    const appUser =  {
         uid: currentUser.$id, 
         email: currentUser.email, 
         role,
-        });
-
+        }
+        setUser(appUser);
         return role;
     } catch(err){
         console.error("Login failed", err);
+        throw err;
     }
   };
     
@@ -90,6 +82,7 @@ useEffect(() => {
         });
             if(!roleData.rows?.length){
                 setUser(null);
+                return;
             }else{
               setUser({
                 uid: currentUser.$id, 

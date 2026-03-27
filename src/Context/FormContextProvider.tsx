@@ -13,7 +13,7 @@ const COLLECTION_ID = import.meta.env.VITE_APPWRITE_WORKSHOPS_COLLECTION;
 const SUBMISSION_ID = import.meta.env.VITE_APPWRITE_FEEDBACK_COLLECTION;
 
 const FormContextProvider = ({children}:{children:ReactNode}) => {
- const {user} = useAuth();
+ const {user, loading} = useAuth();
  const [formData, setFormData] = useState<WorkshopData[]>([]);
  const [totalSubmissions, setTotalSubmissions] = useState(0);
 
@@ -113,6 +113,7 @@ const toggleStatus = useCallback(
 
 // feedback submissions
 useEffect(() => {
+    if(loading || !user) return
     const fetchSubmissions = async () => {
         try{
             const response = await tablesDB.listRows({
@@ -127,7 +128,7 @@ useEffect(() => {
         }
     };
     fetchSubmissions();
-    });
+    },[user, loading]);
 
 useEffect(() => {
    if(!user) return;
