@@ -19,5 +19,10 @@ A Workshop feedback collection system built with React.js,TypeScript and Context
   ## Demo
 Try the live application here: [Live Demo Link](https://workshop-feedback-certificate-autom.vercel.app/)
 
+  ### Demo Credentials
+Use the following test account to explore admin features:
+email: admin123@gmail.com
+password:admin123
+
 
   
