@@ -21,9 +21,8 @@ Try the live application here: [Live Demo Link](https://workshop-feedback-certif
 
   ### Demo Credentials
 Use the following test account to explore features:
-## 
-email: admin123@gmail.com
-password:admin123
+- email: admin123@gmail.com
+- password: admin123
 
 
   
